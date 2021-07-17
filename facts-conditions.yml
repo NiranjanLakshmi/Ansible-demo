@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: install git on linux
+      yum:
+        name: git
+        state: present
+      when: ansible_os_family == 'RedHat'
