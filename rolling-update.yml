@@ -1,0 +1,11 @@
+- hosts: all
+  become: yes
+  serial:
+    - 10%
+  tasks:
+    - name: deploy the code
+      copy:
+        src: index.html
+        dest: /var/www/html/
+      tags:
+        - deploy
