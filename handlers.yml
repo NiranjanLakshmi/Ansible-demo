@@ -1,0 +1,30 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: instal apache
+      yum:
+        name: httpd
+        state: present
+      tags:
+        - install
+
+    - name: start and enable apache
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      tags:
+        - start
+    - name: deploy the code
+      copy:
+        src: index.html
+        dest: /var/www/html/
+      tags:
+        - deploy
+      notify:
+        - restart
+  handlers:
+    - name: restart
+      service:
+        name: httpd
+        state: restarted
